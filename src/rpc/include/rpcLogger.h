@@ -19,7 +19,7 @@ public:
   // policy     : 队列满时的策略（默认阻塞，不丢日志）
   // console : true  → 输出到控制台
   //           false → 不输出控制台（配合非空 log_dir 就是"只写文件"）
-  explicit RpcLogger(const std::string &name = "rpc",
+  explicit RpcLogger(const std::string &name = "rpc.log",
                      const std::string &log_dir = "logs",
                      spdlog::level::level_enum level = spdlog::level::debug,
                      bool console = true, size_t queue_size = 8192,
@@ -36,7 +36,7 @@ public:
 
     if (!log_dir.empty()) {
       sinks.push_back(std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
-          log_dir + "/" + name + ".log",
+          log_dir + "/" + name,
           10 * 1024 * 1024, // 10 MB
           3));              // 保留 3 个历史文件
     }
